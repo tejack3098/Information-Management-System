@@ -1,0 +1,68 @@
+
+{% extends "navbar.html" %}    
+{%block contents%}
+<div class="container">
+
+
+<div class="row justify-content-center">
+<div class="col-md-6">
+<div class="card">
+<header class="card-header">
+	<h4 class="card-title mt-2">Enter Emails in Department</h4>
+</header>
+<article class="card-body">
+<form method="post" action="/register">
+	<div class="form-row">
+		<div class="col form-group">
+			<label>DEPARTMENT:</label>   
+		  	<select name="dept" id="dept" onclick=disableEmail() onchange=getData(this) style="width: 100%;" multiple>
+               
+                    <option>A</option>
+                
+            </select>
+        </div> <!-- form-group end.// -->
+		<div class="col form-group subdept">
+            <label>SUB DEPARTMENT:</label>
+            <select name="subdept" id="subdept" onchange=getDatasub(this) style="width: 100%;"  multiple>
+                <option></option>
+            </select>
+        </div><!-- form-group end.// -->
+	</div>
+    
+    <div class="form-row">
+		<div class="col form-group">
+            <label>SUB DEPARTMENT:</label>
+            <select name="subsubdept" id="subsubdept" style="width: 100%;"  multiple>
+                <option></option>
+            </select>
+        </div> <!-- form-group end.// -->
+        
+		<div class="col form-group subdept">
+            <label>Enter Mobile No.</label>
+            <input type="number" max="10" class="form-control" placeholder="" name="mobile_number">
+        </div><!-- form-group end.// -->
+	</div>
+    
+    <div class="form-row">
+		<div class="col form-group">
+            <label>Enter Email ID</label>
+            <input type="email" class="form-control" placeholder="" name="email_id">
+        </div> <!-- form-group end.// -->
+        
+	</div>
+    
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary btn-block"> Enter </button>
+    </div> <!-- form-group// -->      
+                                             
+</form>
+</article> <!-- card-body end .// -->
+
+</div> <!-- card.// -->
+</div> <!-- col.//-->
+
+</div> <!-- row.//-->
+
+
+</div> 
+{% endblock%}

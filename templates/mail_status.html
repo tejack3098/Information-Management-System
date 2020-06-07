@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Material Design for Bootstrap fonts and icons -->
+    <link  type="text/css" rel="stylesheet" href="{{url_for('static',filename='dash/css/css.css')}}">
+
+    <!-- Material Design for Bootstrap CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
+      
+       <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename = 'css/dashboard.css') }}">
+      
+    <link rel='stylesheet prefetch' href="{{url_for('static', filename = 'dash/css/font-awesome.min.css')}}">
+
+    <title>IFS</title>
+
+      
+  </head>
+    
+    
+  <body>
+    
+    <div class="bmd-layout-container bmd-drawer-f-l bmd-drawer-overlay">
+  <header class="bmd-layout-header">
+    <div class="navbar navbar-light bg-faded">
+      <button class="navbar-toggler" type="button" data-toggle="drawer" data-target="#dw-p1">
+        <span class="sr-only">Toggle drawer</span>
+        <i class="material-icons">menu</i>
+      </button> 
+
+        <nav>
+            <center>
+            <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist" >
+                <a class="nav-item nav-link " id="nav-inbox-tab"  href="{{url_for('dashboard_inbox')}}" role="tab">INBOX</a>
+                
+                <a class="nav-item nav-link "  href="{{url_for('dashboard_compose')}}" role="tab" >COMPOSE MAIL</a>
+                <a class="nav-item nav-link active" id="nav-status-tab"  href="{{url_for('dashboard_mail_status')}}" role="tab" >MAIL STATUS</a>
+                <a class="nav-item nav-link" id="nav-analytic-tab"  href="{{url_for('analytics')}}" role="tab" >Analytics</a>
+                
+            </div>
+            </center>
+        </nav>
+        
+        
+        
+        
+        
+    <br>
+        
+        <ul class="nav navbar-nav">
+            <li class="nav-item"><i class="  fa fa-user" style="padding-right: 1%"></i>Welcome {{user}}</li>
+      </ul>
+
+    </div>
+  </header>
+        
+  <div id="dw-p1" class="bmd-layout-drawer bg-faded">
+    <header>
+      <a class="navbar-brand">IMS-MOSPI</a>
+    </header>
+    <ul class="list-group" >
+      <a class="list-group-item">Reply</a>
+      <a class="list-group-item" href="\logout">Log Out</a>  
+      <a class="list-group-item">Link 3</a>
+    </ul>
+  </div>
+  <main class="bmd-layout-content">
+    <div class="container">
+     <div class="tab-content py-3 px-3 px-sm-0 " id="nav-tabContent">
+              <div class="tab-pane fade show active" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+					   <aside class="lg-side">
+                      <div class="inbox-head" style="background-color: darkcyan">
+                          <h3>Outbox</h3>
+                          <form action="/search" class="pull-right position" method="get">
+                              <div class="input-append">
+                                  <input type="text" class="sr-input" placeholder="Search Mail" name="searchquery">
+                                  <button class="btn sr-btn" type="submit"><i class="fa fa-search"></i></button>
+                              </div>
+                          </form>
+                      </div>
+                      <div class="inbox-body">
+                                     
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+<table class="table table-inbox table-hover">
+<tbody>
+ <tr><th>From
+        </th>
+        <th>Subject
+        </th>
+        <th>View Details
+        </th>
+        <th>Mail Sent Date and Time
+        </th>
+     
+        <th>No Replies Count
+        </th>
+     <th> Replies Count
+        </th>
+        </tr>
+{%for i in data%}
+   
+    <tr class="unread" >
+        
+        
+    {%for (key, value) in i.items()%}
+        {%if(key != "id")%}
+            
+            {%for(keyj, valuej) in value.items()%}
+        
+                {%if keyj=='from' or keyj=='subject' or keyj=='DateTime' or keyj=='num_replies' or  keyj=='num_no_replies' or  keyj=='MessageID'%}
+                    {%if keyj=="MessageID"%}
+                        <td class="view-message  inbox-small-cells"><a href="{{url_for('getMailStatusData',id=valuej)}}">view details</a></td>
+                    {%else%}
+                        
+                        <td class="view-message  dont-show">{{valuej}}</td>
+       
+                    {%endif%}
+                {%endif%}
+            {%endfor%}
+        {%endif%}
+    {%endfor%}</tr>
+{%endfor%}  
+
+
+
+</tbody>
+</table>
+
+
+
+
+
+                                
+                                
+                                
+                    
+                                
+                                
+                              
+                              
+                          <!--<div class="minezindex" style="width: 500px, height: 300px, background-color: red;">kdsajfkshjkfsdj</div>-->
+                      </div>
+                  </aside>	
+				</div>
+				
+                
+				</div>   
+        
+        
+        
+        
+        
+        
+        
+      
+    </div>
+  </main>
+      </div>
+
+      
+      
+      
+      
+      
+      
+      
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="../static/dash/js/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="../static/dash/js/popper.js" integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script>
+    <script>$(document).ready(function() { $('body').bootstrapMaterialDesign(); });</script>
+  </body>
+</html>

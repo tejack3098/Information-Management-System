@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+  <head>
+      <script src="https://code.jquery.com/jquery-1.12.3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Material Design for Bootstrap fonts and icons -->
+    <link  type="text/css" rel="stylesheet" href="{{url_for('static',filename='dash/css/css.css')}}">
+
+    <!-- Material Design for Bootstrap CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
+      
+       <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename = 'css/dashboard.css') }}">
+      
+    <link rel='stylesheet prefetch' href="{{url_for('static', filename = 'dash/css/font-awesome.min.css')}}">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
+
+    <title>IFS</title>
+      
+      <style>
+          body{
+              overflow: auto;
+              overflow-y: scroll;
+          }
+      
+      </style>
+      
+      
+      
+      
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+  </head>
+    
+   
+  <body>
+      <span>
+      <h1 style="text-align: center; color:white; background-color: darkcyan; text-decoration: underline; margin: 2%;">Consolidated Mail Response</h1>
+</span>
+<span>
+          <a class="list-group-item" href="{{url_for('dashboard_mail_status')}}"><b>BACK</b></a>
+      </span>
+      
+
+
+<div style="text-align: center;" id="all">
+    <h4 style="margin:2%"> SUBJECT: {{data.subject}}</h4 >
+    <p>MESSAGE: {{data.msg}}</p>
+ <U>  
+     <h5 style="margin:2%; color: blue">REPLIES</h5></U>
+     {{reply |safe}}
+</div>
+      <button id="cmd">Generate PDF</button>
+      
+            
+<script>
+   var doc = new jsPDF();
+var specialElementHandlers = {
+    '#editor': function (element, renderer) {
+        return true;
+    }
+};
+
+$('#cmd').click(function () {  
+    alert("ss")
+    doc.fromHTML($('#all').html(), 15, 15, {
+        'width': 170,
+            'elementHandlers': specialElementHandlers
+    });
+    doc.save('sample-file.pdf');
+});
+
+      </script>
+      
+</html>

@@ -1,0 +1,78 @@
+
+{% extends "navbar.html" %}    
+{%block contents%}
+<div class="container">
+
+
+<div class="row justify-content-center" style="margin: 2%">
+<h2>INFORMATION MANAGEMENT SYSTEM</h2>
+</div> <!-- row.//-->
+<div class="row justify-content-center" style="margin: 2%">
+<h3>SIH-2019</h3>
+</div> <!-- row.//-->
+    
+    
+    
+<div class="row justify-content-center">
+<div class="col-md-4" style="margin-bottom: 2%">
+<div class="card">      
+<header class="card-header">
+   
+	<h4 class="card-title mt-2">Sign In</h4>
+</header>
+<article class="card-body">
+<form action='/login' method="post">
+	<div class="form-row">
+		<div class="col form-group">
+			<label>Username </label>   
+		  	<input type="text" class="form-control" placeholder="" name="username">
+		</div> <!-- form-group end.// -->
+
+	</div>
+    
+    <div class="form-row">
+
+		<div class="col form-group">
+			<label>Password</label>
+		  	<input type="password" class="form-control" placeholder="" name="password">
+		</div> <!-- form-group end.// -->
+    
+	</div>
+    
+    
+    <div class="form-row" style="justify-content: center">
+
+
+            <div class="checkbox mb-3">
+        <label>
+          <input type="checkbox" value="remember-me" name="remember_me"> Remember me
+        </label>
+      </div>
+    
+	</div>
+    
+	
+	 
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary btn-block"> Login  </button>
+        
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+    </div> <!-- form-group// -->                                               
+</form>
+</article> <!-- card-body end .// -->
+</div> <!-- card.// -->
+</div> <!-- col.//-->
+
+</div> <!-- row.//-->
+
+
+</div> 
+{% endblock%}

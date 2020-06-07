@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<style>
+.dropbtn {
+  background-color: grey;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #ddd;}
+
+.dropdown:hover .dropdown-content {display: block;}
+
+.dropdown:hover .dropbtn {background-color: #3e8e41;}
+
+.dropdown { 
+    padding: 9px; 
+    border: solid 1px #517B97; 
+    outline: 0; 
+    background: -webkit-gradient(linear, left top, left 25, from(#FFFFFF), color-stop(4%, #CAD9E3), to(#FFFFFF)); 
+    background: -moz-linear-gradient(top, #FFFFFF, #CAD9E3 1px, #FFFFFF 25px); 
+    box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px; 
+    -moz-box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px; 
+    -webkit-box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px; 
+
+    } 
+   
+</style>    
+</style>
+</head>
+<body>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+<h3>Personal Analytics</h3>
+        
+<select name="option" class="dropdown" onchange="getPerson()"  id="personid">
+              {% for o in option_list %}
+          
+                <option name="{{ o }}" >{{ o }} </option>
+        
+              
+              {%endfor%}
+              </select>
+
+<h3>Year Analytics</h3>
+<select name="option" class="dropdown" onchange="getPerson()"  id="yearpersonid">
+              {% for o in year_list %}
+          
+                <option name="{{ o }}" >{{ o }} </option>
+        
+              
+              {%endfor%}
+              </select>
+
+
+<div class="container">            
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Regularity(percentage)</th>
+        <th>Delay in Reply(days)</th>
+        <th>Department</th>
+        <th>Designation</th>
+        <th>Email</th>
+        <th>Contact</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td id='uname'></td>
+       <td id='uregular'></td>
+        <td id='udelay'> </td>
+        <td id='udept'></td>
+        <td id='udesign'></td>
+        <td id='uemail'></td>
+        <td id='uconct'></td>
+      </tr>
+      
+    </tbody>
+  </table>
+</div>
+<div class="container"  > 
+<canvas id="regularuu"></canvas>
+</div>
+<div class="container" > 
+<canvas id="delayuu"></canvas>
+</div>
+<h3>Department Analytics</h3>
+
+<select name="option" class="dropdown" onchange="departmentname()" id="depid">
+              {% for o in department_list %}
+          
+                <option name="{{ o }}" >{{ o }} </option>
+        
+              
+              {%endfor%}
+              </select>
+
+<h3>Year Analytics</h3>
+<select name="option" class="dropdown" onchange="departmentname()"  id="yeardepartmentid">
+              {% for o in year_list %}
+          
+                <option name="{{ o }}" >{{ o }} </option>
+        
+              
+              {%endfor%}
+              </select>
+
+
+<script type="text/javascript">
+  
+  function getPerson() {
+    var epid = document.getElementById("personid");
+var strpid = epid.options[epid.selectedIndex].value;
+var eypid = document.getElementById("yearpersonid");
+var streypid = eypid.options[eypid.selectedIndex].value;
+console.log(strpid,streypid)
+    if(strpid!="select"){
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                u=JSON.parse(this.responseText);
+                document.getElementById('uname').innerHTML =u.name;
+                document.getElementById('uregular').innerHTML =u.regu;
+                document.getElementById('udesign').innerHTML =u.design ;
+                document.getElementById('udelay').innerHTML =u.reg ;
+                document.getElementById('udept').innerHTML =u.dept;
+                document.getElementById('uconct').innerHTML =u.cont;
+                document.getElementById('uemail').innerHTML =u.email;
+                console.log(u)
+
+                 var ctx = document.getElementById('regularuu').getContext('2d');
+                
+var chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'bar',
+    // The data for our dataset
+    data: {
+
+        labels: ["quarter1", "quarter2", "quarter3", "quarter4"],
+        datasets: [{
+            label: "Regularity Info",
+            backgroundColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(255, 99, 132)',
+            data: u.regLL,
+        }]
+    },
+
+    // Configuration options go here
+    options: {}
+});
+
+
+ var ctx = document.getElementById('delayuu').getContext('2d');
+                
+var chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'bar',
+    height: 20,
+    
+    // The data for our dataset
+    data: {
+        labels: ["quarter1", "quarter2", "quarter3", "quarter4"],
+        datasets: [{
+            label: "Delay Info",
+            backgroundColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(255, 99, 132)',
+            data: u.delay,
+        }]
+    },
+
+    // Configuration options go here
+    options: {}
+});
+
+
+            }
+         
+        };
+        xmlhttp.open("GET", "http://127.0.0.1:5000/analytics/user/" + strpid+"/"+ streypid,true);
+        xmlhttp.send();
+    }
+}
+function departmentname() {
+  var edid = document.getElementById("depid");
+var strdid = edid.options[edid.selectedIndex].value;
+var eydid = document.getElementById("yearpersonid");
+var streydid = eydid.options[eydid.selectedIndex].value;
+console.log(strdid,streydid)
+  if(strdid!="select"){
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                d=JSON.parse(this.responseText)
+                console.log(d)
+                document.getElementById('dregular').innerHTML =d.regu;
+                document.getElementById('ddelay').innerHTML =d.reg;
+                document.getElementById('dconct').innerHTML =d.cont;
+                document.getElementById('demail').innerHTML =d.email;
+
+
+                var ctx = document.getElementById('delay').getContext('2d');
+                
+var chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'bar',
+    height: 20,
+     
+    // The data for our dataset
+    data: {
+        labels: ["quarter1", "quarter2", "quarter3", "quarter4"],
+        datasets: [{
+            label: "Delay Info",
+            backgroundColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(255, 99, 132)',
+            data: d.delay,
+        }]
+    },
+
+    // Configuration options go here
+    options: {}
+});
+
+
+
+ var ctx = document.getElementById('regular').getContext('2d');
+var chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'bar',
+     
+
+    // The data for our dataset
+    data: {
+     
+        labels: ["quarter1", "quarter2", "quarter3", "quarter4"],
+        datasets: [{
+            label: "Regular Info",
+            backgroundColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(255, 99, 132)',
+            data: d.regLL,
+        }]
+    },
+
+    // Configuration options go here
+    options: {}
+});
+
+
+            }
+          };
+       
+        xmlhttp.open("GET", "http://127.0.0.1:5000/analytics/department/" + strdid+"/"+ streydid, true);
+        xmlhttp.send();
+      }
+    
+}
+</script>
+
+
+
+<div class="container">            
+  <table class="table">
+    <thead>
+      <tr>
+         <th >Regularity(percentage)</th>
+        <th >Delay in Reply(days)</th>
+        <th >Contact</th>
+        <th >Email</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+         <td id='dregular'></td>
+        <td id='ddelay'></td>
+        <td id='dconct'></td>
+        <td id='demail'></td>
+      </tr>
+    </tbody>
+  </table>
+
+<canvas id="regular"></canvas>
+  
+<canvas id="delay"></canvas>
+</div>
+
+
+
+
+
+
+</body>
+</html>

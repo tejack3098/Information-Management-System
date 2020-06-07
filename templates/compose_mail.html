@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Material Design for Bootstrap fonts and icons -->
+    <link  type="text/css" rel="stylesheet" href="{{url_for('static',filename='dash/css/css.css')}}">
+
+    <!-- Material Design for Bootstrap CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
+      
+       <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename = 'css/dashboard.css') }}">
+      
+    <link rel='stylesheet prefetch' href="{{url_for('static', filename = 'dash/css/font-awesome.min.css')}}">
+
+    <title>IFS</title>
+    <!--######################################################################################-->
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+</style>
+    <!--######################################################################################-->
+  </head>
+    
+    
+  <body>
+    
+    <div class="bmd-layout-container bmd-drawer-f-l bmd-drawer-overlay">
+  <header class="bmd-layout-header">
+    <div class="navbar navbar-light bg-faded">
+      <button class="navbar-toggler" type="button" data-toggle="drawer" data-target="#dw-p1">
+        <span class="sr-only">Toggle drawer</span>
+        <i class="material-icons">menu</i>
+      </button> 
+
+        <nav>
+            <center>
+            <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist" >
+                <a class="nav-item nav-link " id="nav-inbox-tab"  href="{{url_for('dashboard_inbox')}}" role="tab">INBOX</a>
+                
+                <a class="nav-item nav-link active "  href="{{url_for('dashboard_compose')}}" role="tab" >COMPOSE MAIL</a>
+                <a class="nav-item nav-link " id="nav-status-tab"  href="{{url_for('dashboard_mail_status')}}" role="tab" >MAIL STATUS</a>
+                <a class="nav-item nav-link" id="nav-analytic-tab"  href="{{url_for('analytics')}}" role="tab" >Analytics</a>
+            </div>
+            </center>
+        </nav>
+        
+        
+        
+        
+       
+        
+    <br>
+        
+        <ul class="nav navbar-nav">
+            <li class="nav-item"><i class="  fa fa-user" style="padding-right: 1%"></i>Welcome {{user}}</li>
+      </ul>
+
+    </div>
+  </header>
+        
+  <div id="dw-p1" class="bmd-layout-drawer bg-faded">
+    <header>
+      <a class="navbar-brand">IMS-MOSPI</a>
+    </header>
+    <ul class="list-group" >
+      <a class="list-group-item">Reply</a>
+      <a class="list-group-item" href="\logout">Log Out</a>  
+      <a class="list-group-item">Link 3</a>
+    </ul>
+  </div>
+  <main class="bmd-layout-content">
+    <div class="container">
+     <div class="tab-content py-3 px-3 px-sm-0 " id="nav-tabContent">
+               <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                    
+<div class="container contact">
+	<div class="row" style="justify-content: center">
+		
+		<div class="col-md-12">
+            <form action="{{url_for('dashboard_compose')}}" method="POST" enctype="multipart/form-data">
+                <div class="contact-form">
+                    <div class="form-row">
+		<div class="col form-group">
+			<label>MAIL SUBJECT:</label>   
+		  	<input type="text" class="form-control" placeholder="ENTER MAIL SUBJECT" name="subject">
+		</div> 
+	</div>
+                    
+                        <script>
+        function getData(tthis){
+            var dept=tthis.value;
+            if (window.XMLHttpRequest) {
+                // code for modern browsers
+                xhttp = new XMLHttpRequest();
+             } else {
+                // code for old IE browsers
+                xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xhttp.onreadystatechange = function() {
+              if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("subdept").innerHTML = this.responseText;
+                document.getElementById("subsubdept").innerHTML = "<option><option>";
+             //     document.getElementById("subdept").setAttribute("disabled",false);
+              }
+            };
+            xhttp.open("GET", "/getdataSubDept/"+dept, true);
+            xhttp.send();
+            console.log(dept)
+        }
+        function getDatasub(tthis){
+            var dept=tthis.value;
+            if (window.XMLHttpRequest) {
+                // code for modern browsers
+                xhttp = new XMLHttpRequest();
+             } else {
+                // code for old IE browsers
+                xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xhttp.onreadystatechange = function() {
+              if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("subsubdept").innerHTML = this.responseText;
+              //  document.getElementById("subsubdept").setAttribute("disabled",false);
+              }
+            };
+            xhttp.open("GET", "/getdataSubSubDept/"+dept, true);
+            xhttp.send();
+            console.log(dept)
+        }
+       /* function disableEmail(){
+            document.getElementById("individualEmail").setAttribute("disabled",true);
+        }
+        function disableSelect(){
+            document.getElementById("dept").setAttribute("disabled",true);
+            document.getElementById("subdept").setAttribute("disabled",true);
+            document.getElementById("subsubdept").setAttribute("disabled",true);
+        }*/
+        
+                    </script>
+   
+    <div class="form-row" >
+        <div class="col form-group">
+			<label>DEPARTMENT:</label>   
+		  	<select name="dept" id="dept" onclick= onchange=getData(this) style="width: 100%;" multiple>
+                {%for i in department%}
+                    <option>{{i}}</option>
+                {%endfor%}
+            </select>
+        </div>
+        
+        <div class="col form-group subdept">
+            <label>SUB DEPARTMENT:</label>
+            <select name="subdept" id="subdept" onchange=getDatasub(this) style="width: 100%;"  multiple>
+                <option></option>
+            </select>
+        </div>
+        
+        <div class="col form-group">
+            <label>SUB DEPARTMENT:</label>
+            <select name="subsubdept" id="subsubdept" style="width: 100%;" onclick="copyemail()" multiple>
+                <option></option>
+            </select>
+        </div>
+          
+	
+	</div>
+    
+    <div class="form-row">
+		<div class="col form-group">
+			<label>Enter individual Email ID</label>   
+            <input id="individualEmail" type="text" class="form-control" placeholder="Enter Email ID" onclick="" name="email_id"> 
+		</div>
+        
+        <div class="col form-group">
+			 <small class="text-muted" id="small"></small>
+		</div>
+        
+       
+
+	</div>
+    
+     <div class="form-row">
+		<div class="col form-group">
+			<label for="ckeditor">MESSAGE:</label>   
+            
+            {{ ckeditor.create() }}<br>
+            
+		</div>
+         {{ ckeditor.load() }}
+	     {{ ckeditor.config() }}
+
+	</div>
+                    
+    <div class="form-row">
+		<div class="col form-group" >
+			<label>Attachments: </label>   
+		  	<input type="file" class="form-control" placeholder="ADD ATTACHMENTS" multiple max="25MB" name="attachments">
+		</div> 
+        
+        <div class="col form-group" >
+			<label>Signature:</label>   
+		  	<input type="text" class="form-control" placeholder="Signature"  name="signature">
+		</div> 
+
+	</div>
+    <div class="form-row">
+		<div class="col form-group" >
+			<label>Send Reminders To: </label>   
+		  	<input type="radio" id = "r1" name="gender" value="male" onclick="printT()"> Individual Reminder
+            <input type="radio" id = "r2" name="gender" value="female" onclick="printT()"> Bulk Reminder
+		</div> 
+
+	</div>
+                    
+    
+                
+    <!--<div class="form-row" id="tableprint">
+		<div class="col form-group">
+			<label>SET REMINDER DATE </label>   
+          		  	<input type="date" class="form-control" placeholder="" name="date">
+        </div>
+        <div class="col form-group">
+			<label>SET REMINDER TIME </label>   
+          		  	<input type="time" class="form-control" placeholder="" name="time">
+        </div> 
+         
+	 </div>-->
+    <div id = "tablePrint"></div>
+                    
+    
+                    
+    <!--<div class="form-row">
+		<div class="col form-group">
+			<label>Reminder Message</label>   
+          		  	<input type="text" class="form-control" placeholder="" name="remmsg">
+        </div>
+        <div class="col form-group">
+			<label>SET REMINDER TIME </label>   
+          		  	<select name="subsubdept" id="subsubdept" style="width: 100%;"  multiple>
+                <option></option>
+            </select>
+        </div> 
+         
+	 </div> -->               
+                <div class="form-group">        
+				  <div class="col-sm-offset-2 col-sm-10">
+					<button type="submit" class="btn btn-send">SEND</button>
+				  </div>
+				</div>
+    
+                
+                
+			</div></form>
+		</div>
+	</div>
+</div>
+
+                </div>
+                
+				</div>   
+        
+        
+        
+        
+        
+        
+        
+      
+    </div>
+  </main>
+      </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="../static/dash/js/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="../static/dash/js/popper.js" integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script>
+    <script>$(document).ready(function() { $('body').bootstrapMaterialDesign(); });</script>
+      <script>
+      function printT() {
+		// body...
+		
+		if(document.getElementById("r1").checked){
+            console.log("individual")
+			var i = document.getElementById("individualEmail").value
+            i = i.split(",")
+            console.log(i)
+            
+			var myTable = "<table>"
+            myTable += "<tr><th>emailID</th>"
+            myTable += "<th>reminder message</th>"
+            myTable += "<th><label for'reminder_date'>set date</lable></th>"
+            myTable += "<th><label for'reminder_time'>set time</lable></th>"
+            myTable += "<th>sms</th></tr>"
+			for (j = 0; j < i.length; j++) { 
+				//console.log(j)
+				myTable+="<tr>"
+				myTable+="<td>"+i[j]+"</td>"
+                nam = "remsg"+j
+				myTable+="<td><input type = 'text'name="+nam+"></td>"
+                
+                remdate = "remdate"+j
+			myTable += "<td><input id = 'reminder_date' type = 'date' name="+remdate+"></td>"
+            
+            
+                remtime = "remtime"+j
+			myTable += "<td><input id = 'reminder_time' type = 'time' name="+remtime+"></td>"
+                
+                remsms = "remsms"+j
+			 
+                myTable += "<td><input type='radio' name="+remsms+" value='yes'>Yes"
+                
+                myTable += "<input type='radio' name="+remsms+" value='no'>No</td>"
+                
+				myTable+="</tr>"
+
+			}
+			myTable+="</table>"
+			console.log("hello")
+			document.getElementById("tablePrint").innerHTML = myTable;
+
+		}
+
+		if(document.getElementById("r2").checked){
+
+			var myTable = "<table>"
+			myTable += "<tr>"
+
+			myTable += "<th><label for'reminder_msg'>message</lable></th>"
+			myTable += "<th><label for'reminder_date'>set date</lable></th>"
+            myTable += "<th><label for'reminder_time'>set time</lable></th>"
+            myTable += "<th><label for'remreceipt'>Sent Reminder to</lable></th>"
+            myTable += "<th><label for'sms'>sms</lable></th>"
+            myTable += "</tr>"
+            
+            myTable += "<tr>"
+            myTable += "<td><textarea id = 'reminder_msg'></textarea></td>"
+
+			
+			myTable += "<td><input id = 'reminder_date' type = 'date'></td>"
+            
+            
+			myTable += "<td><input id = 'reminder_time' type = 'time'></td>"
+			myTable += "<td><input id = 'remreceipt' type = 'text'></td>"
+
+			
+			myTable += "<td><label class='switch'><input type='checkbox'><span class='slider round'></span></label></td>"
+
+			myTable += "</tr>"
+			myTable += "</table>"
+			document.getElementById("tablePrint").innerHTML = myTable;
+            
+
+		}
+	}
+      
+      </script>
+      <script>
+          
+          
+            var arr = [ ];
+      function copyemail(){
+          
+        z =  $("#subsubdept option:selected").text();
+            
+            
+          arr.push(z);
+          let unique = [...new Set(arr)];
+          
+        document.getElementById("small").innerHTML= unique  
+          
+          
+          }
+    
+          
+          
+      
+      
+      
+      
+      </script>
+  </body>
+</html>
