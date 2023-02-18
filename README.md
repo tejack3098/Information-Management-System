@@ -1,4 +1,4 @@
-# Information-Management-System
+# Automated Information Management System for Inter-Ministerial Communications
 
 # Smart India Hackathon 2019 Winning Project | Ministry of Statistics and PI 
 
